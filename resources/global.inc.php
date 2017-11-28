@@ -4,6 +4,10 @@ if (!defined("WEBPAGE_CONTEXT")) {
     exit;
 }
 
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 require_once(__DIR__."/connect-db.inc.php");
 require_once(__DIR__."/functions.inc.php");
 
@@ -26,11 +30,6 @@ $IMAGE_FORMATS = array('image/png', 'image/jpeg');
 unset($_SESSION['errors']);
 unset($_SESSION['notices']);
 
-// $_SESSION['user']['id'] = 2;
-// $_SESSION['user']['name'] = 'Kamil';
-// $_SESSION['user']['handle'] = 'admin';
-// $_SESSION['user']['bio'] = 'Kamil';
-// $_SESSION['user']['email'] = 'admin@admin.com';
 
 
 header('X-XSS-Protection:0');

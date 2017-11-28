@@ -25,7 +25,8 @@ if (isset($_POST['edit-photo-submitted'])) {
     }
 
     if (!$ERRORS) {
-        if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/images/profile/".$_SESSION['user']['id'])) {
+        if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/profile/".$_SESSION['user']['id'])) {
+        // if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/".$_FILES['profile-photo']['name'])) {
             $db->query("UPDATE `users` SET `photo`=1 WHERE `user_id`=".$db->real_escape_string((int)$_SESSION['user']['id']));
             $NOTICES[] = "Your photo has been uploaded successfully.";
             $_SESSION['user']['photo'] = 1;
@@ -34,6 +35,7 @@ if (isset($_POST['edit-photo-submitted'])) {
         }
     }
 } else if (isset($_POST['edit-submitted'])) {
+
     $user_id = $_SESSION['user']['id'];
     $name = isset($_POST['edit-name']) ? trim($_POST['edit-name']) : "";
     $handle = isset($_POST['edit-handle']) ? trim($_POST['edit-handle']) : "";
@@ -57,24 +59,24 @@ if (isset($_POST['edit-photo-submitted'])) {
         }
     }
 
-    if ($handle != $_SESSION['user']['handle']) {
-        if (!$handle) {
-            $ERRORS[] = "Handle must not be empty.";
-        } else if (strlen($handle) > 20) {
-            $ERRORS[] = "Handle must not be more than 20 characters.";
-        } else if (get_user_by_handle($handle)) {
-            $ERRORS[] = "This handle is already in use.";
-        } else {
-            $query = "UPDATE `users` SET `handle`='" . $db->real_escape_string($handle) . "', `date_updated`=NOW() WHERE `user_id`=" . $db->real_escape_string($user_id);
-            $result = $db->query($query);
-            if ($result) {
-                $_SESSION['user']['handle'] = $handle;
-                $NOTICES[] = "Handle has been updated successfully.";
-            } else {
-                $ERRORS[] = "Handle was unable to be updated.";
-            }
-        }
-    }
+    // if ($handle != $_SESSION['user']['handle']) {
+    //     if (!$handle) {
+    //         $ERRORS[] = "Handle must not be empty.";
+    //     } else if (strlen($handle) > 20) {
+    //         $ERRORS[] = "Handle must not be more than 20 characters.";
+    //     } else if (get_user_by_handle($handle)) {
+    //         $ERRORS[] = "This handle is already in use.";
+    //     } else {
+    //         $query = "UPDATE `users` SET `handle`='" . $db->real_escape_string($handle) . "', `date_updated`=NOW() WHERE `user_id`=" . $db->real_escape_string($user_id);
+    //         $result = $db->query($query);
+    //         if ($result) {
+    //             $_SESSION['user']['handle'] = $handle;
+    //             $NOTICES[] = "Handle has been updated successfully.";
+    //         } else {
+    //             $ERRORS[] = "Handle was unable to be updated.";
+    //         }
+    //     }
+    // }
 
     if ($bio != $_SESSION['user']['bio']) {
         if (strlen($bio) > 512) {
@@ -110,33 +112,33 @@ if (isset($_POST['edit-photo-submitted'])) {
         }
     }
 } else if (isset($_POST['change-password-submitted'])) {
-    $user_id = $_SESSION['user']['id'];
-
-    $current_password = isset($_POST['current-password']) ? $_POST['current-password'] : "";
-    $new_password = isset($_POST['new-password']) ? $_POST['new-password'] : "";
-    $conf_password = isset($_POST['conf-password']) ? $_POST['conf-password'] : "";
-
-    $current_user = get_this_user();
-    $current_password_hash = $current_user['password'];
-
-    if (!$current_password) {
-        $ERRORS[] = "Current password must not be empty.";
-    } else if (!password_verify($current_password, $current_password_hash)) {
-        $ERRORS[] = "Your current password is incorrect.";
-    } else if (!$new_password) {
-        $ERRORS[] = "New password must not be empty.";
-    } else if ($new_password != $conf_password) {
-        $ERRORS[] = "New passwords do not match.";
-    } else {
-        $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
-        $query = "UPDATE `users` SET `password`='" . $db->real_escape_string($new_password_hash) . "', `date_updated`=NOW() WHERE `user_id`=" . $db->real_escape_string($user_id);
-        $result = $db->query($query);
-        if ($result) {
-            $NOTICES[] = "Password has been successfully changed.";
-        } else {
-            $ERRORS[] = "Password unable to be changed.";
-        }
-    }
+    // $user_id = $_SESSION['user']['id'];
+    //
+    // $current_password = isset($_POST['current-password']) ? $_POST['current-password'] : "";
+    // $new_password = isset($_POST['new-password']) ? $_POST['new-password'] : "";
+    // $conf_password = isset($_POST['conf-password']) ? $_POST['conf-password'] : "";
+    //
+    // $current_user = get_this_user();
+    // $current_password_hash = $current_user['password'];
+    //
+    // if (!$current_password) {
+    //     $ERRORS[] = "Current password must not be empty.";
+    // } else if (!password_verify($current_password, $current_password_hash)) {
+    //     $ERRORS[] = "Your current password is incorrect.";
+    // } else if (!$new_password) {
+    //     $ERRORS[] = "New password must not be empty.";
+    // } else if ($new_password != $conf_password) {
+    //     $ERRORS[] = "New passwords do not match.";
+    // } else {
+    //     $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+    //     $query = "UPDATE `users` SET `password`='" . $db->real_escape_string($new_password_hash) . "', `date_updated`=NOW() WHERE `user_id`=" . $db->real_escape_string($user_id);
+    //     $result = $db->query($query);
+    //     if ($result) {
+    //         $NOTICES[] = "Password has been successfully changed.";
+    //     } else {
+    //         $ERRORS[] = "Password unable to be changed.";
+    //     }
+    // }
 } else if (isset($_POST['delete-account-submitted'])) {
     // $query = "DELETE FROM `users` WHERE `user_id`=" . $db->real_escape_string($_SESSION['user']['id']);
     // $result = $db->query($query);

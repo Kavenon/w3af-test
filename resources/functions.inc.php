@@ -22,8 +22,8 @@ function logout()
 function get_user_by_handle($handle)
 {
     global $db;
-    $query = "SELECT * FROM `users` WHERE `handle`='" . $db->real_escape_string($handle) . "'";
-    $result = $db->query($query);
+    $query = "SELECT * FROM `users` WHERE `handle`='" . $handle . "'";
+    $result = $db->query($query) or die($db->error);
     if ($result) {
         return $result->fetch_assoc();
     }
@@ -33,8 +33,8 @@ function get_user_by_handle($handle)
 function get_user_by_email($email)
 {
     global $db;
-    $query = "SELECT * FROM `users` WHERE `email`='" . $db->real_escape_string($email) . "'";
-    $result = $db->query($query);
+    $query = "SELECT * FROM `users` WHERE `email`='" . $email . "'";
+    $result = $db->query($query) or die($db->error);
     if ($result) {
         return $result->fetch_assoc();
     }
@@ -44,8 +44,8 @@ function get_user_by_email($email)
 function get_user_by_id($user_id)
 {
     global $db;
-    $query = "SELECT * FROM `users` WHERE `user_id`=" . $db->real_escape_string((int)$user_id);
-    $result = $db->query($query);
+    $query = "SELECT * FROM `users` WHERE `user_id`=" . (int)$user_id;
+    $result = $db->query($query) or die($db->error);
     if ($result) {
         return $result->fetch_assoc();
     }
@@ -65,8 +65,8 @@ function get_num_posts($user_id)
 {
     global $db;
     $query = "SELECT COUNT(*) as `num_posts` FROM `posts`
-              WHERE `user_id`=" . $db->real_escape_string((int)$user_id) . " AND `active`=1";
-    $results = $db->query($query);
+              WHERE `user_id`=" . (int)$user_id . " AND `active`=1";
+    $results = $db->query($query) or die($db->error);
     if ($results) {
         $row = $results->fetch_assoc();
         if ($row && isset($row['num_posts'])) {
@@ -264,7 +264,7 @@ function display_user($user_id)
         }
         echo "<div class=\"list-item\">\n";
         echo "\t<div class=\"list-item-photo\">\n";
-        if ($user['photo']) {
+        if (@$user['photo']) {
             echo "\t\t<img src=\"".SITE_ROOT."/images/profile/".$user['user_id']."\" width=\"100%\" height=\"auto\" />\n";
         }
         echo "\t</div>\n";

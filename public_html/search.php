@@ -12,14 +12,14 @@ set_include_path(implode(PATH_SEPARATOR, array(
 require_once("global.inc.php");
 
 $user_query = preg_replace('/\s+/', " ", trim(htmlentities(isset($_GET['q']) ? $_GET['q'] : "")));
+// $user_query = $_GET['q'];
 
 require_once("header.inc.php");
 
 ?>
-
 <div class="box">
     <?php
-    
+
     $count_query = "SELECT COUNT(*) AS `num_results` FROM `users`
                     WHERE `handle` LIKE '%".$db->real_escape_string($user_query)."%'
                     OR `name` LIKE '%".$db->real_escape_string($user_query)."%'
@@ -31,26 +31,26 @@ require_once("header.inc.php");
     } else {
         $num_results = 0;
     }
-    
+
     if (isset($_GET['p']) && (int)$_GET['p']) {
         $current_page = (int)$_GET['p'];
     } else {
         $current_page = 1;
     }
-    
+
     $last_page = ceil($num_results / RESULTS_PER_PAGE);
     if ($current_page > $last_page) {
         $current_page = $last_page;
     } else if ($current_page < 1) {
         $current_page = 1;
     }
-    
+
     ?>
-    
+
     <h2>Results for "<?php echo $user_query; ?>"</h2>
-    
+
     <?php
-    
+
     $query = "SELECT * FROM `users`
               WHERE `handle` LIKE '%".$db->real_escape_string($user_query)."%'
               OR `name` LIKE '%".$db->real_escape_string($user_query)."%'
@@ -65,8 +65,13 @@ require_once("header.inc.php");
     } else {
         echo "<p>No matching users found!</p>";
     }
-    
+
     ?>
+
+    <form method="post">
+      <input type="text" name="eq">
+      <input type="submit" value="Wykonaj"/>
+    </form>
 </div>
 
 <?php require_once("footer.inc.php");

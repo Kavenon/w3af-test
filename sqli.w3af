@@ -1,0 +1,69 @@
+# -----------------------------------------------------------------------------------------------------------
+#                                              W3AF AUDIT SCRIPT FOR WEB APPLICATION
+# -----------------------------------------------------------------------------------------------------------
+#Configure HTTP settings
+http-settings
+set timeout 30
+back
+
+# -------------------------------------
+#               MISC
+# -------------------------------------
+misc-settings
+set max_discovery_time 20
+set fuzz_cookies True
+set fuzz_form_files True
+set fuzz_url_parts True
+set fuzz_url_filenames True
+back
+
+# -------------------------------------
+#               PLUGINS
+# -------------------------------------
+plugins
+crawl web_spider
+crawl config web_spider
+set only_forward False
+set follow_regex http://localhost/public_html/login.php
+back
+
+# -------------------------------------
+#               AUDIT
+# -------------------------------------
+audit sqli
+
+# -------------------------------------
+#               AUTH
+# -------------------------------------
+#auth detailed
+#auth config detailed
+#set username admin
+#set password admin
+#set auth_url http://localhost/public_html/login.php
+#set username_field login-user
+#set password_field login-password
+#set check_url http://localhost/public_html/index.php
+#set check_string 'Logout'
+#set data_format login-user=%U&login-password=%P&login-submitted=true
+#back
+
+# -------------------------------------
+#               OUTPUT
+# -------------------------------------
+output console
+output config console
+set verbose False
+back
+back
+
+# -------------------------------------
+#               TARGET
+# -------------------------------------
+target
+set target http://localhost/public_html/login.php
+set target_os windows
+set target_framework php
+back
+
+cleanup
+start

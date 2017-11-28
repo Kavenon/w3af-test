@@ -8,7 +8,6 @@ set_include_path(implode(PATH_SEPARATOR, array(
 )));
 
 require_once("global.inc.php");
-print_R($_POST);
 
 if (isset($_POST['login-submitted'])) {
     $user = isset($_POST['login-user']) ? trim($_POST['login-user']) : "";
