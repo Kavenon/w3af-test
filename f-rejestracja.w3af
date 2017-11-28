@@ -24,31 +24,13 @@ plugins
 crawl web_spider
 crawl config web_spider
 set only_forward False
-set follow_regex http://localhost/public_html/edit-profile.php
+set follow_regex http://localhost/public_html/register.php
 back
 
 # -------------------------------------
 #               AUDIT
 # -------------------------------------
-audit file_upload
-file_upload extensions jpg
-back
-
-# -------------------------------------
-#               AUTH
-# -------------------------------------
-auth detailed
-auth config detailed
-set username admin
-set password admin
-set auth_url http://localhost/public_html/login.php
-set username_field login-user
-set password_field login-password
-set check_url http://localhost/public_html/index.php
-set check_string 'Logout'
-set data_format login-user=%U&login-password=%P&login-submitted=true
-back
-
+audit sqli ssi os_commanding
 # -------------------------------------
 #               OUTPUT
 # -------------------------------------
@@ -62,7 +44,7 @@ back
 #               TARGET
 # -------------------------------------
 target
-set target http://localhost/public_html/edit-profile.php
+set target http://localhost/public_html/register.php
 set target_os unix
 set target_framework php
 back

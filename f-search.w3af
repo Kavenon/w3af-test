@@ -24,16 +24,13 @@ plugins
 crawl web_spider
 crawl config web_spider
 set only_forward False
-set follow_regex http://localhost/public_html/edit-profile.php
+set follow_regex http://localhost/public_html/search.php
 back
 
 # -------------------------------------
 #               AUDIT
 # -------------------------------------
-audit file_upload
-file_upload extensions jpg
-back
-
+audit xss sqli ssi
 # -------------------------------------
 #               AUTH
 # -------------------------------------
@@ -62,8 +59,8 @@ back
 #               TARGET
 # -------------------------------------
 target
-set target http://localhost/public_html/edit-profile.php
-set target_os unix
+set target http://localhost/public_html/search.php
+set target_os windows
 set target_framework php
 back
 

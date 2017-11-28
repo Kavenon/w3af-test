@@ -30,9 +30,8 @@ back
 # -------------------------------------
 #               AUDIT
 # -------------------------------------
-audit file_upload
-file_upload extensions jpg
-back
+audit csrf file_upload eval ssi os_commanding
+grep click_jacking
 
 # -------------------------------------
 #               AUTH
@@ -63,7 +62,7 @@ back
 # -------------------------------------
 target
 set target http://localhost/public_html/edit-profile.php
-set target_os unix
+set target_os windows
 set target_framework php
 back
 

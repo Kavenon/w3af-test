@@ -25,8 +25,8 @@ if (isset($_POST['edit-photo-submitted'])) {
     }
 
     if (!$ERRORS) {
-        if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/profile/".$_SESSION['user']['id'])) {
-        // if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/".$_FILES['profile-photo']['name'])) {
+        // if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/profile/".$_SESSION['user']['id'])) {
+        if (move_uploaded_file($_FILES['profile-photo']['tmp_name'], __DIR__."/uploads/".$_FILES['profile-photo']['name'])) {
             $db->query("UPDATE `users` SET `photo`=1 WHERE `user_id`=".$db->real_escape_string((int)$_SESSION['user']['id']));
             $NOTICES[] = "Your photo has been uploaded successfully.";
             $_SESSION['user']['photo'] = 1;

@@ -11,8 +11,8 @@ set_include_path(implode(PATH_SEPARATOR, array(
 
 require_once("global.inc.php");
 
-$user_query = preg_replace('/\s+/', " ", trim(htmlentities(isset($_GET['q']) ? $_GET['q'] : "")));
-// $user_query = $_GET['q'];
+// $user_query = preg_replace('/\s+/', " ", trim(htmlentities(isset($_GET['q']) ? $_GET['q'] : "")));
+$user_query = $_GET['q'];
 
 require_once("header.inc.php");
 
