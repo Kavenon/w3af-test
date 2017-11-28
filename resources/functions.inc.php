@@ -399,16 +399,10 @@ function display_create_post_form()
     <form id="create-post-form" name="create-post-form" method="post" action="index.php">
         <div class="input-wrapper">
             <label for="create-post-content" class="input-required">Compose new post</label>
-            <textarea class="text-input" id="create-post-content" name="create-post-content"
-                      maxlength="<?php echo POST_MAX_LENGTH; ?>"
-                ><?php if (isset($_POST['create-post-content'])) {
-                    echo $_POST['create-post-content'];
-                } ?></textarea>
-            <script type="text/javascript">
-                $(document).ready(function () {
-                    $('#create-post-content').autosize();
-                });
-            </script>
+            <input class="text-input" id="create-post-content" name="create-post-content"
+                      maxlength="<?php echo POST_MAX_LENGTH; ?>" value="<?php if (isset($_POST['create-post-content'])) {
+                          echo $_POST['create-post-content'];
+                      } ?>" />
         </div>
         <div class="submit-wrapper">
             <input class="submit-button" type="submit" name="create-post-submitted" value="Post"/>

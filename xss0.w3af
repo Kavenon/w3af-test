@@ -34,8 +34,6 @@ audit xss
 audit config xss
 set persistent_xss False
 back
-audit csrf eval ssi
-grep click_jacking
 
 # -------------------------------------
 #               AUTH
@@ -57,7 +55,7 @@ back
 # -------------------------------------
 output console
 output config console
-set verbose True
+set verbose False
 back
 back
 
@@ -66,7 +64,7 @@ back
 # -------------------------------------
 target
 set target http://localhost/public_html/index.php
-set target_os unix
+set target_os windows
 set target_framework php
 back
 

@@ -30,7 +30,7 @@ back
 # -------------------------------------
 #               AUDIT
 # -------------------------------------
-audit csrf file_upload eval ssi os_commanding
+audit file_upload eval ssi os_commanding
 grep click_jacking
 
 # -------------------------------------
